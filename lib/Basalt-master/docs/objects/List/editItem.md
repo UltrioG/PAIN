@@ -1,0 +1,30 @@
+## editItem
+
+### Description
+
+Edits an item in the list.
+
+### Parameters
+
+1. `number` The index of the item to be edited
+2. `string` The new item name
+3. `number|color` The new item background color - optional
+4. `number|color` The new item text color - optional
+5. `any` New additional information - optional
+
+#### Returns
+
+1. `object` The object in use
+
+### Usage
+
+* Creates a default list with 3 entries and edits the second one.
+
+```lua
+local mainFrame = basalt.createFrame()
+local aList = mainFrame:addList()
+aList:addItem("1. Entry")
+aList:addItem("2. Entry", colors.yellow)
+aList:addItem("3. Entry", colors.yellow, colors.green)
+aList:editItem(2, "Still 2. Entry", colors.red)
+```
