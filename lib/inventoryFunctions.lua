@@ -45,7 +45,7 @@ end
 
 ---Adds a container to this inventory group.\
 ---Note the order inventories are added might affect some iteration functions.
----@param containerName string	What name the container should have. Defaults to its item name with a number attached.
+---@param containerName string?	What name the container should have. Defaults to its item name with a number attached.
 ---@param inventoryTypes table<storageType, true>	What types of resources this container holds. e.g. `{storageType.item, storageType.fluid}`
 ---@param inventoryPeripheralName string	The name of the peripheral of the inventory.
 ---@return StorageGroup self

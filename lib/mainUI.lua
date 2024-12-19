@@ -1,12 +1,10 @@
-local BASALT = require("lib.Basalt-master.Basalt")
-
 local void = function()end
 local module = {}
 
 ---@param term any
 ---@param mainInventory StorageGroup
 ---@param outputInventory StorageGroup
-function module.matchTermToInventory(term, mainInventory, outputInventory)
+function module.matchTermToInventory(BASALT, term, mainInventory, outputInventory)
 	local main = BASALT.addFrame():setTheme({FrameBG = colors.black, FrameFG = colors.lightGray})
 	local stockDebounce = false
 	local inventoryList = {}
@@ -18,6 +16,7 @@ function module.matchTermToInventory(term, mainInventory, outputInventory)
 	}
 	local currentView = "inventory"
 	local lastView = "inventory"
+	local searchQuery = ""
 
 	local function switchView(new)
 		local success = false
@@ -96,6 +95,10 @@ function module.matchTermToInventory(term, mainInventory, outputInventory)
 		end)
 	searchBox:addInput():setSize("parent.w-2", 1):setPosition(2,"parent.y+1")
 		:setBackground(colors.black):setForeground(colors.white):setDefaultText("Search")
+		:onKeyUp(function (self)
+			searchQuery = self:getValue()
+			updateList()
+		end)
 	views.inventory:addLabel():setSize('parent.w', 1):setPosition(1, "parent.y+2"):setText("Items:"):setForeground(colors.white)
 
 	local lastSelection = -1
@@ -179,7 +182,7 @@ function module.matchTermToInventory(term, mainInventory, outputInventory)
 	itemList:setSize("parent.w-2", "parent.h-5")
 	itemList:onSelect(function (self, event, item)
 		detailedView = (not detailedView) or lastSelection ~= itemList:getItemIndex()
-		
+		if #inventoryList == 0 then return end
 		local val = inventoryList[itemList:getItemIndex()]
 		local modName, itemName = string.match(val.name, "^([^:]-):(.+)$")
 		local itemDisplayName = val.displayName
@@ -206,7 +209,7 @@ function module.matchTermToInventory(term, mainInventory, outputInventory)
 		itemList:clear()
 
 		for _, v in ipairs(mainInventory.stock) do
-			table.insert(inventoryList, v)
+			if v.displayName:match("^"..searchQuery) then table.insert(inventoryList, v) end
 		end
 		table.sort(inventoryList, function (a, b)
 			if a.count > b.count then return true end
@@ -216,6 +219,7 @@ function module.matchTermToInventory(term, mainInventory, outputInventory)
 		for _, v in ipairs(inventoryList) do
 			addItemToItemList(v.displayName)
 		end
+		if #inventoryList == 0 then return end
 		local val = inventoryList[itemList:getItemIndex()]
 		local modName, itemName = string.match(val.name, "^([^:]-):(.+)$")
 		local itemDisplayName = val.displayName
