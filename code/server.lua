@@ -1,0 +1,1 @@
+rednet.host("pain.net", "SERVER")
