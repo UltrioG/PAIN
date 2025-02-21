@@ -2,5 +2,5 @@
 This is Ultrio's attempt at a storage system in CC:Tweaked.
 
 # Credits
-Basalt by [@Pyroxenium](https://github.com/Pyroxenium) et al
+Object code by Alexander Nusov[https://github.com/nusov/lua-object] et al.
 Everything else is made by Ultrio

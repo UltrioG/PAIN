@@ -1,4 +1,0 @@
-- Getting Started
-  - [Home](Home)
-  - [How To](home/How-To)
-  - [Download](home/download)
