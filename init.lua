@@ -19,19 +19,19 @@ print("Initializing setup program...")
 
 print("Trying access to server...")
 
-local function serverSetup()
-
+local function setupServer()
+	require("server")()
 end
 
-local function clientSetup()
+local function setupClient()
 
 end
 
 local hasServer = not not rednet.lookup("pain.net", "SERVER")
 if hasServer then
 	print("Server found. Beginning client setup...")
-	clientSetup()
+	setupClient()
 else
 	print("Server not found. Beginning server setup...")
-	serverSetup()
+	setupServer()
 end
